@@ -154,7 +154,7 @@ a {
 }
 
 .service-card h2 {
-  margin: 0;
+  margin: 2px 0 0;
   color: #f8f8fb;
   font-size: clamp(20px, 1.35vw, 26px);
   font-weight: 700;
@@ -175,6 +175,28 @@ a {
 
 .service-card.is-visible h2::after {
   animation: underlineIn 680ms 400ms ease both;
+}
+
+/* Per-card accent colors: stripe + hover glow */
+.service-card:nth-child(1) h2::after { background: #FCAA00; }
+.service-card:nth-child(1) { border-color: rgba(252, 170, 0, 0.28); }
+.service-card:nth-child(1):hover { border-color: rgba(252, 170, 0, 0.28); }
+.service-card:nth-child(1)::before {
+  background: radial-gradient(circle at var(--mx, 78%) var(--my, 12%), rgba(252, 170, 0, 0.13), transparent 18rem);
+}
+
+.service-card:nth-child(2) h2::after { background: #009ECC; }
+.service-card:nth-child(2) { border-color: rgba(0, 158, 204, 0.28); }
+.service-card:nth-child(2):hover { border-color: rgba(0, 158, 204, 0.28); }
+.service-card:nth-child(2)::before {
+  background: radial-gradient(circle at var(--mx, 78%) var(--my, 12%), rgba(0, 158, 204, 0.13), transparent 18rem);
+}
+
+.service-card:nth-child(3) h2::after { background: #A2DF3A; }
+.service-card:nth-child(3) { border-color: rgba(162, 223, 58, 0.28); }
+.service-card:nth-child(3):hover { border-color: rgba(162, 223, 58, 0.28); }
+.service-card:nth-child(3)::before {
+  background: radial-gradient(circle at var(--mx, 78%) var(--my, 12%), rgba(162, 223, 58, 0.13), transparent 18rem);
 }
 
 .service-card p {
@@ -435,9 +457,24 @@ a {
 
 /* Final Section Block ("To Whom We Aim The Services") */
 .aim-card {
-  margin-top: 36px;
-  padding-top: 26px;
+  margin-top: 0;
   position: relative;
+}
+
+.aim-card__back-glow {
+  position: absolute;
+  top: -60px;
+  right: -80px;
+  width: 633px;
+  height: 494px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.aim-card__back-glow svg {
+  width: 100%;
+  height: 100%;
 }
 
 .aim-card__body {
@@ -472,6 +509,7 @@ a {
   font-size: clamp(24px, 1.8vw, 32px);
   font-weight: 700;
   line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .aim-card h2::after {
@@ -480,7 +518,7 @@ a {
   height: 3px;
   margin-top: 18px;
   content: "";
-  background: var(--orange);
+  background: linear-gradient(90deg, #E6DEFF 0%, #A35CFA 48.08%, #E81F88 100%);
   transform-origin: left;
   transform: scaleX(0);
 }
@@ -497,12 +535,34 @@ a {
   line-height: 1.58;
 }
 
-.aim-card__cols {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+.aim-card__cols,
+.aim-card__features {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.aim-feature-card {
+  flex: 1 0 0;
+  display: flex;
   align-items: center;
-  gap: 48px;
-  margin-bottom: 44px;
+  gap: 12px;
+  padding: 19px 20px;
+  background: #272833;
+  border-radius: 6px;
+}
+
+.aim-feature-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.aim-feature-text {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .aim-col-item {
@@ -617,15 +677,12 @@ a {
     gap: 32px;
   }
 
-  .aim-card__cols {
-    grid-template-columns: 1fr;
-    gap: 32px;
+  .aim-card__cols,
+  .aim-card__features {
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .aim-col-divider {
-    display: none;
-  }
-  
   .aim-card__body {
     padding: 36px 36px;
   }
@@ -634,14 +691,9 @@ a {
 /* ===== Scroll-sync section (copied from forge, transparent / no background) ===== */
 .scroll-sync-section {
   width: 100%;
-  padding: 120px 32px;
+  padding: 120px 32px 48px;
   position: relative;
   z-index: 10;
-  background:
-    radial-gradient(circle at 74% 12%, rgba(74, 42, 119, 0.58), transparent 24rem),
-    radial-gradient(circle at 70% 36%, rgba(42, 54, 135, 0.36), transparent 35rem),
-    linear-gradient(180deg, #282932 0%, #292a33 100%);
-  background-attachment: fixed;
 }
 
 .scroll-sync-section__container {
@@ -985,12 +1037,6 @@ a {
             </li>
             <li>
               <a href="#">
-                <span>Cloud Computing Service</span>
-                <span class="arrow" aria-hidden="true">→</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
                 <span>Cloud Enablement Service</span>
                 <span class="arrow" aria-hidden="true">→</span>
               </a>
@@ -1003,7 +1049,7 @@ a {
             </li>
             <li>
               <a href="#">
-                <span>Cloud Support and Consulting Services</span>
+                <span>Cloud Support and Consulting Service</span>
                 <span class="arrow" aria-hidden="true">→</span>
               </a>
             </li>
@@ -1149,8 +1195,9 @@ a {
                 <h4 class="scroll-sync-section__content-heading">Supported Activities</h4>
                 <ul class="scroll-sync-section__list">
                   <li>Planning and alignment of cloud resources with business objectives</li>
-                  <li>Cloud cost management and optimization</li>
-                  <li>Compliance monitoring and enforcement in line with EPAM Cloud Security Policies</li>
+                  <li>Streamlining cloud account creation and ensuring secure access to resources</li>
+                  <li>Simplifying overhead cloud cost management and optimization</li>
+                  <li>Facilitating compliance monitoring and enforcement according to EPAM Cloud Security policies</li>
                 </ul>
               </div>
               <div class="scroll-sync-section__subsection">
@@ -1181,32 +1228,27 @@ a {
               <div class="scroll-sync-section__subsection">
                 <h4 class="scroll-sync-section__content-heading">Business Justification</h4>
                 <p class="scroll-sync-section__block-text">
-                  In the dynamic world of cloud computing, governance is paramount to ensure regulatory compliance,
-                  cost efficiency, and secure operations. Cloud Governance in the CloudForge portfolio aids EPAM
-                  projects in achieving their objectives while effectively managing risks associated with cloud
-                  infrastructures.
+                  As cloud technology advances, CloudApp Engine Services provide crucial support for EPAM projects, streamlining application development on a fully managed, multi-cloud Kubernetes platform. Enhanced with in-built Observability and seamless integration with native Public Cloud services, these services provide a robust framework for application management.
                 </p>
               </div>
               <div class="scroll-sync-section__subsection">
                 <h4 class="scroll-sync-section__content-heading">Supported Activities</h4>
                 <ul class="scroll-sync-section__list">
-                  <li>Planning and alignment of cloud resources with business objectives</li>
-                  <li>Cloud cost management and optimization</li>
-                  <li>Compliance monitoring and enforcement in line with EPAM Cloud Security Policies</li>
+                  <li>Integration with EPAM security standards for compliance assurance</li>
+                  <li>Automated orchestration of cloud resources for optimal allocation and management of assets across platforms</li>
+                  <li>Provision of monitoring tools to track metrics, logs, and traces to proactively address service issues</li>
                 </ul>
               </div>
               <div class="scroll-sync-section__subsection">
                 <h4 class="scroll-sync-section__content-heading">Desired Outcomes in Terms of Utility</h4>
                 <p class="scroll-sync-section__block-text">
-                  The EPAM projects can manage, deploy, and scale cloud resources with clear guidelines, without being
-                  constrained by compliance concerns or inefficiencies.
+                  The EPAM projects are offered to manage and operate containerized workloads at scale, with a focus on security, efficiency, and global reliability.
                 </p>
               </div>
               <div class="scroll-sync-section__subsection">
                 <h4 class="scroll-sync-section__content-heading">Desired Outcomes in Terms of Warranty</h4>
                 <p class="scroll-sync-section__block-text">
-                  EPAM projects are assured of a secure, compliant, and cost-optimized cloud environment, ensuring
-                  business continuity and safeguarding organizational reputation.
+                  EPAM projects benefit from a stable and robust multi-cloud platform, enhancing trust and customer satisfaction through the consistent service quality of CloudApp Engine Services.
                 </p>
               </div>
             </article>
@@ -1264,26 +1306,25 @@ a {
       <section class="aim-card reveal">
         <div class="aim-card__body">
           <div class="aim-card__bg-svg">
-            <svg width="100%" height="100%" viewBox="0 0 1161 462" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <rect opacity="0.1" x="17" y="33" width="1126" height="429" rx="24" fill="white"/>
-              <g clip-path="url(#clip0_68_13753)">
+            <svg width="100%" height="100%" viewBox="0 0 1161 450" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <g clip-path="url(#clip0_159_1279)">
                 <path d="M0 38.4C0 24.9587 0 18.2381 2.61584 13.1042C4.9168 8.58834 8.58834 4.9168 13.1042 2.61584C18.2381 0 24.9587 0 38.4 0H1122.6C1136.04 0 1142.76 0 1147.9 2.61584C1152.41 4.9168 1156.08 8.58834 1158.38 13.1042C1161 18.2381 1161 24.9587 1161 38.4V411.1C1161 424.541 1161 431.262 1158.38 436.396C1156.08 440.912 1152.41 444.583 1147.9 446.884C1142.76 449.5 1136.04 449.5 1122.6 449.5H38.4C24.9588 449.5 18.2381 449.5 13.1042 446.884C8.58834 444.583 4.9168 440.912 2.61584 436.396C0 431.262 0 424.541 0 411.1V38.4Z" fill="#283036"/>
-                <g filter="url(#filter0_f_68_13753)" style="mix-blend-mode:overlay">
-                  <ellipse cx="1142" cy="218" rx="750" ry="333" fill="url(#paint0_linear_68_13753)"/>
+                <g filter="url(#filter0_f_159_1279)" style="mix-blend-mode:overlay">
+                  <ellipse cx="580.5" cy="457.5" rx="559.5" ry="248.5" fill="url(#paint0_linear_159_1279)"/>
                 </g>
               </g>
               <defs>
-                <filter id="filter0_f_68_13753" x="-8" y="-515" width="2300" height="1466" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <filter id="filter0_f_159_1279" x="-379" y="-191" width="1919" height="1297" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                   <feFlood flood-opacity="0" result="BackgroundImageFix"/>
                   <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-                  <feGaussianBlur stdDeviation="200" result="effect1_foregroundBlur_68_13753"/>
+                  <feGaussianBlur stdDeviation="200" result="effect1_foregroundBlur_159_1279"/>
                 </filter>
-                <linearGradient id="paint0_linear_68_13753" x1="367.083" y1="-88.4485" x2="682.752" y2="626.201" gradientUnits="userSpaceOnUse">
+                <linearGradient id="paint0_linear_159_1279" x1="2.41197" y1="228.814" x2="238.031" y2="762.061" gradientUnits="userSpaceOnUse">
                   <stop stop-color="#AE80DC"/>
                   <stop offset="0.477716" stop-color="#DC83C3"/>
                   <stop offset="1" stop-color="#8084DC"/>
                 </linearGradient>
-                <clipPath id="clip0_68_13753">
+                <clipPath id="clip0_159_1279">
                   <path d="M0 38.4C0 24.9587 0 18.2381 2.61584 13.1042C4.9168 8.58834 8.58834 4.9168 13.1042 2.61584C18.2381 0 24.9587 0 38.4 0H1122.6C1136.04 0 1142.76 0 1147.9 2.61584C1152.41 4.9168 1156.08 8.58834 1158.38 13.1042C1161 18.2381 1161 24.9587 1161 38.4V411.1C1161 424.541 1161 431.262 1158.38 436.396C1156.08 440.912 1152.41 444.583 1147.9 446.884C1142.76 449.5 1136.04 449.5 1122.6 449.5H38.4C24.9588 449.5 18.2381 449.5 13.1042 446.884C8.58834 444.583 4.9168 440.912 2.61584 436.396C0 431.262 0 424.541 0 411.1V38.4Z" fill="white"/>
                 </clipPath>
               </defs>
@@ -1292,51 +1333,72 @@ a {
           <div class="aim-card__content">
             <h2>To Whom We Aim The Services</h2>
             <p class="aim-card__intro">
-              The Cloud Forge is designed to facilitate an effective adoption of cloud computing and further enhance developers' capabilities in the EPAM environment. The portfolio touches upon several aspects of modern software development and cloud management. Given its extensive offerings, multiple projects at EPAM would be interesting. Here’s a breakdown:
+              The&nbsp;Cloud Forge&nbsp;is designed to facilitate an effective adoption of cloud computing and further enhance developers' capabilities in the EPAM environment. The portfolio touches upon several aspects of modern software development and cloud management. Given its extensive offerings, multiple projects at EPAM would be interesting. Here’s a breakdown:
             </p>
 
-            <div class="aim-card__cols">
-              <!-- Cloud Resources Column  -->
-              <div class="aim-col-item">
-                <svg width="70" height="70" viewBox="0 0 36 36" fill="none" class="icon-svg flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 31.5V27.1299C21 26.4808 21.2105 25.8492 21.6 25.3299L24.1169 21.974C24.5404 21.4093 25.1882 21.0562 25.8923 21.0061C26.5964 20.9561 27.2876 21.2141 27.7868 21.7132V21.7132C28.6436 22.5701 28.74 23.9266 28.013 24.8961L26.435 27" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M31.5 31.5L32.367 29.766C32.7834 28.9331 33.0001 28.0147 33 27.0835V17.25C33 16.0074 31.9926 15 30.75 15V15C29.5074 15 28.5 16.0074 28.5 17.25V23.25" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M4.5 31.5L3.633 29.766C3.21659 28.9331 2.99986 28.0147 3 27.0835V17.25C3 16.0074 4.00736 15 5.25 15V15C6.49264 15 7.5 16.0074 7.5 17.25V23.25" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M15 31.5V27.1299C15 26.4808 14.7895 25.8492 14.4 25.3299L11.8831 21.974C11.4595 21.4093 10.8118 21.0562 10.1077 21.0061C9.40356 20.9561 8.71237 21.2141 8.21323 21.7132V21.7132C7.35636 22.5701 7.25996 23.9266 7.98704 24.8961L9.56497 27" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="aim-card__features">
+              <div class="aim-feature-card">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none" class="aim-feature-icon" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 31.5V27.1299C21 26.4808 21.2105 25.8492 21.6 25.3299L24.1169 21.974C24.5404 21.4093 25.1882 21.0562 25.8923 21.0061C26.5964 20.9561 27.2876 21.2141 27.7868 21.7132C28.6436 22.5701 28.74 23.9266 28.013 24.8961L26.435 27" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M31.5 31.5L32.367 29.766C32.7834 28.9331 33.0001 28.0147 33 27.0835V17.25C33 16.0074 31.9926 15 30.75 15C29.5074 15 28.5 16.0074 28.5 17.25V23.25" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4.5 31.5L3.633 29.766C3.21659 28.9331 2.99986 28.0147 3 27.0835V17.25C3 16.0074 4.00736 15 5.25 15C6.49264 15 7.5 16.0074 7.5 17.25V23.25" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15 31.5V27.1299C15 26.4808 14.7895 25.8492 14.4 25.3299L11.8831 21.974C11.4595 21.4093 10.8118 21.0562 10.1077 21.0061C9.40356 20.9561 8.71237 21.2141 8.21323 21.7132C7.35636 22.5701 7.25996 23.9266 7.98704 24.8961L9.56497 27" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M22.4373 8.28149C24.2317 8.44387 25.5801 9.99042 25.4964 11.7902C25.4128 13.59 23.9267 15.0048 22.125 15" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M13.5627 8.28149C11.7683 8.44387 10.4199 9.99042 10.5036 11.7902C10.5872 13.59 22.0733 15.0048 22.125 15" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M22.4373 8.28153C22.0873 6.10248 20.2069 4.5 18 4.5C15.793 4.5 13.9126 6.10248 13.5626 8.28153" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M13.875 15H22.125" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div class="aim-col-text">
+                <div class="aim-feature-text">
                   Any EPAM projects that need efficient cloud resource management, cloud security, compliance, and cost optimization.
                 </div>
               </div>
-              
-              <div class="aim-col-divider"></div>
-
-              <!-- Monitoring Column -->
-              <div class="aim-col-item">
-                <svg width="70" height="70" viewBox="0 0 36 36" fill="none" class="icon-svg flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.5 4.50513H7.5C5.84315 4.50513 4.5 5.84827 4.5 7.50513V23.2551C4.5 24.912 5.84315 26.2551 7.5 26.2551H28.5C30.1569 26.2551 31.5 24.912 31.5 23.2551V19.5" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21.0627 8.28149C19.2684 8.44404 17.9202 9.99053 18.0039 11.7902C18.0875 13.5899 19.5734 15.0046 21.375 15" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M29.9373 8.28149C31.7316 8.44404 33.0798 9.99053 32.9961 11.7902C32.9124 13.5899 31.4266 15.0046 29.625 15" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21.0627 8.28145C21.4128 6.10244 23.2931 4.5 25.5001 4.5C27.707 4.5 29.5874 6.10244 29.9374 8.28145" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M29.625 15H21.375" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M13.5 9H12" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M13.5 13.5H12" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21.375 26.25L21.75 31.5" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 31.5H24" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M14.625 26.25L14.25 31.5" stroke="#F5FDFF" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <div class="aim-col-text">
+              <div class="aim-feature-card">
+                <svg width="36" height="36" viewBox="0 0 70 70" class="aim-feature-icon" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_138_1076)">
+<mask id="mask0_138_1076" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="70" height="70">
+<path d="M0 7.62939e-06H70V70H0V7.62939e-06Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_138_1076)">
+<path d="M29.2674 47.4906C26.384 49.9734 22.6297 51.4746 18.5254 51.4746C9.42676 51.4746 2.05078 44.0986 2.05078 35C2.05078 25.9014 9.42676 18.5254 18.5254 18.5254C27.624 18.5254 35 25.9014 35 35" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40.7326 22.5094C43.616 20.0266 47.3703 18.5254 51.4746 18.5254C60.5733 18.5254 67.9492 25.9014 67.9492 35C67.9492 44.0986 60.5733 51.4746 51.4746 51.4746C42.376 51.4746 35 44.0986 35 35" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40.7326 22.5093L41.5548 16.7627" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M40.7326 22.5094L46.3344 23.832" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29.2674 47.4903L28.4452 53.2368" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M29.2674 47.4902L23.6656 46.1676" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M23.1913 33.9058C23.1913 36.4827 21.1023 38.5718 18.5253 38.5718C15.9485 38.5718 13.8595 36.4827 13.8595 33.9058C13.8595 31.329 15.9485 29.2399 18.5253 29.2399C21.1023 29.2399 23.1913 31.329 23.1913 33.9058Z" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.5254 29.2402V26.6553" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.8595 33.9062H11.2746" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M23.1913 33.9062H25.7762" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18.5254 38.5718V41.1567" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.8247 30.6069L23.6525 28.7791" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.2261 30.6069L13.3983 28.7791" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.8247 37.2054L23.6525 39.0332" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.2261 37.2054L13.3983 39.0332" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M46.8087 35.9542C46.8087 38.5311 48.8977 40.6201 51.4747 40.6201C54.0516 40.6201 56.1405 38.5311 56.1405 35.9542C56.1405 33.3773 54.0516 31.2882 51.4747 31.2882C48.8977 31.2882 46.8087 33.3773 46.8087 35.9542Z" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M51.4746 31.2886V28.7036" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M56.1405 35.9541H58.7254" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M46.8087 35.9541H44.2238" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M51.4746 40.6201V43.2051" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M48.1753 32.6548L46.3475 30.827" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M54.7739 32.6548L56.6017 30.827" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M48.1753 39.2538L46.3475 41.0815" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M54.7739 39.2538L56.6017 41.0815" stroke="white" stroke-width="4.10156" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_138_1076">
+<rect width="70" height="70" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+                <div class="aim-feature-text">
                   Any EPAM projects that follow a continuous development, integration, testing, and deployment model.
                 </div>
               </div>
             </div>
 
             <p class="aim-card__outro">
-              In conclusion, the Cloud Forge portfolio addresses a wide range of needs, and its services are highly relevant for a diverse set of projects within EPAM. Any project that is keen on balancing innovation with operational integrity would find the offerings of this portfolio invaluable.
+              In conclusion, the Cloud Forge&nbsp;portfolio addresses a wide range of needs, and its services are highly relevant for a diverse set of projects within EPAM. Any project that is keen on balancing innovation with operational integrity would find the offerings of this portfolio invaluable.
             </p>
           </div>
         </div>
